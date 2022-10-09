@@ -36,16 +36,11 @@ namespace WebApi.Service
 
     public void Create(CreateRequest model)
     {
-        // validate
         if (_context.Users.Any(x => x.Email == model.Email))
             throw new AppException("User with the email '" + model.Email + "' already exists");
 
-        // map model to new user object
         var user = _mapper.Map<User>(model);
 
-        // hash password
-
-        // save user
         _context.Users.Add(user);
         _context.SaveChanges();
     }
@@ -54,14 +49,9 @@ namespace WebApi.Service
     {
         var user = getUser(id);
 
-        // validate
         if (model.Email != user.Email && _context.Users.Any(x => x.Email == model.Email))
             throw new AppException("User with the email '" + model.Email + "' already exists");
 
-        // hash password if it was entered
-        
-
-        // copy model to user and save
         _mapper.Map(model, user);
         _context.Users.Update(user);
         _context.SaveChanges();
@@ -74,12 +64,12 @@ namespace WebApi.Service
         _context.SaveChanges();
     }
 
-    // helper methods
-
     private User getUser(int id)
     {
         var user = _context.Users.Find(id);
-        if (user == null) throw new KeyNotFoundException("User not found");
+        if (user == null) 
+        throw new KeyNotFoundException("User not found");
+        
         return user;
     }
 }

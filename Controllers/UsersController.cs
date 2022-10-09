@@ -13,7 +13,7 @@ namespace WebApi.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-         private IUserService _userService;
+    private IUserService _userService;
     private IMapper _mapper;
 
     public UsersController(
